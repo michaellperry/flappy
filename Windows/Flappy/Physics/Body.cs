@@ -11,11 +11,15 @@ namespace Flappy.Physics
         public float InitialTime { get; set; }
         public Vector2 InitialPosition { get; set; }
         public Vector2 InitialVelocity { get; set; }
+        public Vector2 Gravity { get; set; }
 
         public Vector2 Position(GameTime time)
         {
             float t = (float)time.TotalGameTime.TotalSeconds - InitialTime;
-            return InitialPosition + t * InitialVelocity;
+            return
+                InitialPosition +
+                t * InitialVelocity +
+                t * t * 0.5f * Gravity;
         }
     }
 }

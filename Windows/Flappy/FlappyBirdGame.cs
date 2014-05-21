@@ -28,8 +28,9 @@ namespace Flappy
             _birdBody = new Body()
             {
                 InitialTime = 0.0f,
-                InitialPosition = Vector2.Zero,
-                InitialVelocity = new Vector2(20.0f, 5.0f)
+                InitialPosition = new Vector2(0.0f, 200.0f),
+                InitialVelocity = new Vector2(50.0f, -300.0f),
+                Gravity = new Vector2(0.0f, 200.0f)
             };
         }
 
