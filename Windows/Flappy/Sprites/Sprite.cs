@@ -15,14 +15,14 @@ namespace Flappy.Sprites
         public Sprite(ContentManager content, string name)
         {
             _texture = content.Load<Texture2D>(name);
-            Location = Vector2.Zero;
+            Position = Vector2.Zero;
         }
 
-        public Vector2 Location { get; set; }
+        public Vector2 Position { get; set; }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture, Location);
+            spriteBatch.Draw(_texture, Position);
         }
     }
 }

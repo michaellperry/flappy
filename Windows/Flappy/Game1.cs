@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using Flappy.Sprites;
+using Flappy.Physics;
 #endregion
 
 namespace Flappy
@@ -20,6 +21,7 @@ namespace Flappy
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        private Body _birdBody;
         private Sprite _bird;
 
         public Game1()
@@ -27,6 +29,12 @@ namespace Flappy
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            _birdBody = new Body()
+            {
+                InitialPosition = Vector2.Zero,
+                InitialVelocity = new Vector2(20.0f, 5.0f)
+            };
         }
 
         /// <summary>
@@ -73,8 +81,7 @@ namespace Flappy
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            Point mousePosition = Mouse.GetState().Position;
-            _bird.Location = new Vector2(mousePosition.X, mousePosition.Y);
+            _bird.Position = _birdBody.Position(gameTime);
 
             base.Update(gameTime);
         }
