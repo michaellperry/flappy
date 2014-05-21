@@ -20,7 +20,8 @@ namespace Flappy
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        private Bird _bird;
+        private Sprite _bird;
+
         public Game1()
             : base()
         {
@@ -50,7 +51,7 @@ namespace Flappy
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _bird = new Bird(Content);
+            _bird = new Sprite(Content, "Bird");
         }
 
         /// <summary>
@@ -72,7 +73,8 @@ namespace Flappy
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            Point mousePosition = Mouse.GetState().Position;
+            _bird.Location = new Vector2(mousePosition.X, mousePosition.Y);
 
             base.Update(gameTime);
         }

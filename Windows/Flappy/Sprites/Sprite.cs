@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -11,14 +12,17 @@ namespace Flappy.Sprites
     {
         private Texture2D _texture;
 
-        public Sprite(Texture2D texture)
+        public Sprite(ContentManager content, string name)
         {
-            _texture = texture;
+            _texture = content.Load<Texture2D>(name);
+            Location = Vector2.Zero;
         }
+
+        public Vector2 Location { get; set; }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture, Vector2.Zero);
+            spriteBatch.Draw(_texture, Location);
         }
     }
 }
