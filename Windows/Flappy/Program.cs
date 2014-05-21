@@ -18,7 +18,7 @@ namespace Flappy
         [STAThread]
         static void Main()
         {
-            using (var game = new Game1())
+            using (var game = new FlappyBirdGame())
                 game.Run();
         }
     }
