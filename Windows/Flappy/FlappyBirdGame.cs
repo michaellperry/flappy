@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using Flappy.Sprites;
 using Flappy.Physics;
+using System.Diagnostics;
 
 namespace Flappy
 {
@@ -19,6 +20,8 @@ namespace Flappy
         private Body _birdBody;
         private Sprite _birdSprite;
 
+        private float _setting;
+
         public FlappyBirdGame()
             : base()
         {
@@ -29,8 +32,8 @@ namespace Flappy
             {
                 InitialTime = 0.0f,
                 InitialPosition = new Vector2(0.0f, 200.0f),
-                InitialVelocity = new Vector2(50.0f, -300.0f),
-                Gravity = new Vector2(0.0f, 200.0f)
+                InitialVelocity = new Vector2(435.0f, -600.0f),
+                Gravity = new Vector2(0.0f, 810.0f)
             };
         }
 
@@ -55,6 +58,10 @@ namespace Flappy
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                _birdBody.InitialTime = (float)gameTime.TotalGameTime.TotalSeconds;
+
+            //AdjustSetting();
             _birdSprite.Position = _birdBody.Position(gameTime);
 
             base.Update(gameTime);
@@ -69,6 +76,18 @@ namespace Flappy
             _spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void AdjustSetting()
+        {
+            var mousePosition = Mouse.GetState().Position;
+            float setting = 5.0f * mousePosition.Y;
+            if (setting != _setting)
+            {
+                _setting = setting;
+                _birdBody.InitialVelocity = new Vector2(_setting, -600.0f);
+                Debug.WriteLine(String.Format("Initial velocity: {0}", _setting));
+            }
         }
     }
 }
