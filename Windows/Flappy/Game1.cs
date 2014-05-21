@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
+using Flappy.Sprites;
 #endregion
 
 namespace Flappy
@@ -18,8 +19,8 @@ namespace Flappy
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        private Texture2D _bird;
 
+        private Bird _bird;
         public Game1()
             : base()
         {
@@ -49,8 +50,7 @@ namespace Flappy
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
-            _bird = Content.Load<Texture2D>("Bird");
+            _bird = new Bird(Content);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Flappy
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            spriteBatch.Draw(_bird, Vector2.Zero);
+            _bird.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
