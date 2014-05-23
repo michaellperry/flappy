@@ -1,3 +1,5 @@
+using Flappy.Physics;
+using Flappy.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -13,6 +15,9 @@ namespace Flappy
         SpriteBatch spriteBatch;
         SpriteFont font;
 
+        private Body _birdBody;
+        private Sprite _birdSprite;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -23,6 +28,14 @@ namespace Flappy
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 480;
             graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
+
+            _birdBody = new Body()
+            {
+                InitialTime = 0.0f,
+                InitialPosition = new Vector2(0.0f, 200.0f),
+                InitialVelocity = new Vector2(435.0f, -600.0f),
+                Gravity = new Vector2(0.0f, 810.0f)
+            };
         }
 
         /// <summary>
@@ -49,6 +62,8 @@ namespace Flappy
 
             // TODO: use this.Content to load your game content here
             font = Content.Load<SpriteFont>("spriteFont1");
+
+            _birdSprite = new Sprite(Content, "Bird");
         }
 
         /// <summary>
@@ -63,7 +78,10 @@ namespace Flappy
                 Exit();
             }
 
-            // TODO: Add your update logic here
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                _birdBody.InitialTime = (float)gameTime.TotalGameTime.TotalSeconds;
+
+            _birdSprite.Position = _birdBody.Position(gameTime);
 
             base.Update(gameTime);
         }
@@ -78,6 +96,7 @@ namespace Flappy
 
             spriteBatch.Begin();
             spriteBatch.DrawString(font, "Hello from MonoGame!", new Vector2(16, 16), Color.White);
+            _birdSprite.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);

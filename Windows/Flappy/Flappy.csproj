@@ -36,10 +36,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="FlappyBirdGame.cs" />
-    <Compile Include="Physics\Body.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sprites\Sprite.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -53,6 +51,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Flappy.Logic\Flappy.Logic.csproj">
+      <Project>{df1b79bc-4385-4540-847c-159da5f0a1a8}</Project>
+      <Name>Flappy.Logic</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
