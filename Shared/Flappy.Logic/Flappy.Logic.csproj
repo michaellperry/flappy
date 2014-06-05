@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controls\IControls.cs" />
+    <Compile Include="Controls\KeyboardControls.cs" />
+    <Compile Include="Controls\TouchControls.cs" />
     <Compile Include="Physics\Body.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sprites\Sprite.cs" />

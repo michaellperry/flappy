@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Flappy.Sprites;
 using Flappy.Physics;
 using System.Diagnostics;
+using Flappy.Logic.Controls;
 
 namespace Flappy
 {
@@ -19,6 +20,7 @@ namespace Flappy
 
         private Body _birdBody;
         private Sprite _birdSprite;
+        private IControls _controls;
 
         private float _setting;
 
@@ -35,6 +37,7 @@ namespace Flappy
                 InitialVelocity = new Vector2(0.0f, 0.0f),
                 Gravity = new Vector2(0.0f, 810.0f)
             };
+            _controls = new KeyboardControls();
         }
 
         protected override void Initialize()
@@ -58,7 +61,7 @@ namespace Flappy
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            if (_controls.ReadFlap())
             {
                 _birdBody.InitialPosition = _birdBody.Position(gameTime);
                 _birdBody.InitialVelocity = new Vector2(0.0f, -400.0f);
