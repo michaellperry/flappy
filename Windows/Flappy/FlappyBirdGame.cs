@@ -31,8 +31,8 @@ namespace Flappy
             _birdBody = new Body()
             {
                 InitialTime = 0.0f,
-                InitialPosition = new Vector2(0.0f, 200.0f),
-                InitialVelocity = new Vector2(435.0f, -600.0f),
+                InitialPosition = new Vector2(400.0f, 200.0f),
+                InitialVelocity = new Vector2(0.0f, 0.0f),
                 Gravity = new Vector2(0.0f, 810.0f)
             };
         }
@@ -59,9 +59,12 @@ namespace Flappy
                 Exit();
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                _birdBody.InitialPosition = _birdBody.Position(gameTime);
+                _birdBody.InitialVelocity = new Vector2(0.0f, -400.0f);
                 _birdBody.InitialTime = (float)gameTime.TotalGameTime.TotalSeconds;
+            }
 
-            //AdjustSetting();
             _birdSprite.Position = _birdBody.Position(gameTime);
 
             base.Update(gameTime);
