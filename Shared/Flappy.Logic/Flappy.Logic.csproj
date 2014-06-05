@@ -34,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Characters\Bird.cs" />
     <Compile Include="Controls\IControls.cs" />
     <Compile Include="Controls\KeyboardControls.cs" />
     <Compile Include="Controls\TouchControls.cs" />

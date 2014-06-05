@@ -10,6 +10,7 @@ using Flappy.Sprites;
 using Flappy.Physics;
 using System.Diagnostics;
 using Flappy.Logic.Controls;
+using Flappy.Logic.Characters;
 
 namespace Flappy
 {
@@ -18,9 +19,7 @@ namespace Flappy
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private Body _birdBody;
-        private Sprite _birdSprite;
-        private IControls _controls;
+        private Bird _bird;
 
         private float _setting;
 
@@ -30,14 +29,7 @@ namespace Flappy
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            _birdBody = new Body()
-            {
-                InitialTime = 0.0f,
-                InitialPosition = new Vector2(400.0f, 200.0f),
-                InitialVelocity = new Vector2(0.0f, 0.0f),
-                Acceleration = new Vector2(0.0f, 810.0f)
-            };
-            _controls = new KeyboardControls();
+            _bird = new Bird();
         }
 
         protected override void Initialize()
@@ -51,7 +43,7 @@ namespace Flappy
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _birdSprite = new Sprite(Content, "Bird");
+            _bird.LoadContent(Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -61,12 +53,7 @@ namespace Flappy
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (_controls.ReadFlap())
-            {
-                _birdBody.ChangeVelocity(gameTime, new Vector2(0.0f, -400.0f));
-            }
-
-            _birdSprite.Position = _birdBody.Position(gameTime);
+            _bird.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -76,7 +63,7 @@ namespace Flappy
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
-            _birdSprite.Draw(_spriteBatch);
+            _bird.Draw(_spriteBatch);
             _spriteBatch.End();
 
             base.Draw(gameTime);
@@ -89,7 +76,7 @@ namespace Flappy
             if (setting != _setting)
             {
                 _setting = setting;
-                _birdBody.InitialVelocity = new Vector2(_setting, -600.0f);
+                _bird.AdjustSetting(_setting);
                 Debug.WriteLine(String.Format("Initial velocity: {0}", _setting));
             }
         }
