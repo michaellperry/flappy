@@ -34,7 +34,7 @@ namespace Flappy
                 InitialTime = 0.0f,
                 InitialPosition = new Vector2(0.0f, 200.0f),
                 InitialVelocity = new Vector2(435.0f, -600.0f),
-                Gravity = new Vector2(0.0f, 810.0f)
+                Acceleration = new Vector2(0.0f, 810.0f)
             };
         }
 
