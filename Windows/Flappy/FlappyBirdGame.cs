@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Flappy.Logic.Characters;
+using Flappy.Logic.Controls;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Storage;
-using Microsoft.Xna.Framework.GamerServices;
-using Flappy.Sprites;
-using Flappy.Physics;
+using System;
 using System.Diagnostics;
-using Flappy.Logic.Controls;
-using Flappy.Logic.Characters;
 
 namespace Flappy
 {
@@ -29,7 +23,7 @@ namespace Flappy
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            _bird = new Bird();
+            _bird = new Bird(new KeyboardControls());
         }
 
         protected override void Initialize()

@@ -1,20 +1,14 @@
 ﻿using Microsoft.Xna.Framework.Input.Touch;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Flappy.Logic.Controls
 {
-    public class TouchControls
+    public class TouchControls : IControls
     {
-        public bool Flap
+        public bool ReadFlap()
         {
-            get
-            {
-                return TouchPanel.GetState().Any(touch =>
-                    touch.State == TouchLocationState.Pressed);
-            }
+            return TouchPanel.GetState().Any(touch =>
+                touch.State == TouchLocationState.Pressed);
         }
     }
 }

@@ -1,13 +1,9 @@
-﻿using Flappy.Physics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Flappy.Logic.Controls;
+using Flappy.Physics;
 using Flappy.Sprites;
-using Flappy.Logic.Controls;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Flappy.Logic.Characters
 {
@@ -17,7 +13,7 @@ namespace Flappy.Logic.Characters
         private Sprite _sprite;
         private IControls _controls;
 
-        public Bird()
+        public Bird(IControls controls)
         {
             _body = new Body()
             {
@@ -26,7 +22,7 @@ namespace Flappy.Logic.Characters
                 InitialVelocity = new Vector2(0.0f, 0.0f),
                 Acceleration = new Vector2(0.0f, 810.0f)
             };
-            _controls = new KeyboardControls();
+            _controls = controls;
         }
 
         public void LoadContent(ContentManager contentManager)
