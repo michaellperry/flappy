@@ -15,7 +15,7 @@ namespace Flappy
         GraphicsDeviceManager _graphics;
         SpriteBatch _spriteBatch;
 
-        private Camera _camera;
+        private Viewer _viewer;
         private Bird _bird;
 
         public Game1()
@@ -29,8 +29,8 @@ namespace Flappy
             _graphics.PreferredBackBufferHeight = 480;
             _graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
 
+            _viewer = new Viewer();
             _bird = new Bird(new TouchControls());
-            _camera = new Camera();
         }
 
         protected override void Initialize()
@@ -52,6 +52,7 @@ namespace Flappy
                 Exit();
             }
 
+            _viewer.Update(gameTime);
             _bird.Update(gameTime);
 
             base.Update(gameTime);
@@ -62,7 +63,7 @@ namespace Flappy
             _graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
-            _bird.Draw(_spriteBatch, _camera);
+            _bird.Draw(_spriteBatch, _viewer.Camera);
             _spriteBatch.End();
 
             base.Draw(gameTime);

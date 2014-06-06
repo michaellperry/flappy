@@ -15,8 +15,7 @@ namespace Flappy
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private Camera _camera;
-        private Body _cameraBody;
+        private Viewer _viewer;
         private Bird _bird;
 
         private float _setting;
@@ -27,9 +26,7 @@ namespace Flappy
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            _camera = new Camera();
-            _cameraBody = new Body();
-            _cameraBody.ChangeVelocity(new GameTime(), new Vector2(300.0f, 0.0f));
+            _viewer = new Viewer();
             _bird = new Bird(new KeyboardControls());
         }
 
@@ -54,8 +51,8 @@ namespace Flappy
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            _viewer.Update(gameTime);
             _bird.Update(gameTime);
-            _camera.Position = _cameraBody.Position(gameTime);
 
             base.Update(gameTime);
         }
@@ -65,7 +62,7 @@ namespace Flappy
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
-            _bird.Draw(_spriteBatch, _camera);
+            _bird.Draw(_spriteBatch, _viewer.Camera);
             _spriteBatch.End();
 
             base.Draw(gameTime);
