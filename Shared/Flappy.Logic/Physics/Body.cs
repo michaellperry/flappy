@@ -18,6 +18,14 @@ namespace Flappy.Physics
                 t * t * 0.5f * Acceleration;
         }
 
+        public Vector2 Velocity(GameTime time)
+        {
+            float t = (float)time.TotalGameTime.TotalSeconds - InitialTime;
+            return
+                InitialVelocity +
+                t * Acceleration;
+        }
+
         public void ChangeVelocity(GameTime gameTime, Vector2 newVelocity)
         {
             InitialPosition = Position(gameTime);
