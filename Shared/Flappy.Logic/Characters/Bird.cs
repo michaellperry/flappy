@@ -19,7 +19,7 @@ namespace Flappy.Logic.Characters
             _body = new Body()
             {
                 InitialTime = 0.0f,
-                InitialPosition = new Vector2(0.0f, 200.0f),
+                InitialPosition = new Vector2(200.0f, 200.0f),
                 InitialVelocity = new Vector2(300.0f, 0.0f),
                 Acceleration = new Vector2(0.0f, 810.0f)
             };
@@ -44,9 +44,9 @@ namespace Flappy.Logic.Characters
             _sprite.Rotation = (float)Math.Atan2(velocity.Y, velocity.X);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Camera camera)
         {
-            _sprite.Draw(spriteBatch);
+            _sprite.Draw(spriteBatch, camera);
         }
 
         public void AdjustSetting(float setting1)

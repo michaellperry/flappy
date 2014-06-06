@@ -23,10 +23,10 @@ namespace Flappy.Sprites
         public Vector2 Origin { get; set; }
         public float Rotation { get; set; }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Camera camera)
         {
             spriteBatch.Draw(_texture,
-                position: Position,
+                position: Position - camera.Position,
                 rotation: Rotation,
                 origin: Origin);
         }

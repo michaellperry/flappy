@@ -1,5 +1,7 @@
 ﻿using Flappy.Logic.Characters;
 using Flappy.Logic.Controls;
+using Flappy.Physics;
+using Flappy.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -13,6 +15,8 @@ namespace Flappy
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        private Camera _camera;
+        private Body _cameraBody;
         private Bird _bird;
 
         private float _setting;
@@ -23,6 +27,9 @@ namespace Flappy
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
+            _camera = new Camera();
+            _cameraBody = new Body();
+            _cameraBody.ChangeVelocity(new GameTime(), new Vector2(300.0f, 0.0f));
             _bird = new Bird(new KeyboardControls());
         }
 
@@ -48,6 +55,7 @@ namespace Flappy
                 Exit();
 
             _bird.Update(gameTime);
+            _camera.Position = _cameraBody.Position(gameTime);
 
             base.Update(gameTime);
         }
@@ -57,7 +65,7 @@ namespace Flappy
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
-            _bird.Draw(_spriteBatch);
+            _bird.Draw(_spriteBatch, _camera);
             _spriteBatch.End();
 
             base.Draw(gameTime);

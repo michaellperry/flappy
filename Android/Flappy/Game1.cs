@@ -1,5 +1,6 @@
 using Flappy.Logic.Characters;
 using Flappy.Logic.Controls;
+using Flappy.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,6 +15,7 @@ namespace Flappy
         GraphicsDeviceManager _graphics;
         SpriteBatch _spriteBatch;
 
+        private Camera _camera;
         private Bird _bird;
 
         public Game1()
@@ -28,6 +30,7 @@ namespace Flappy
             _graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
 
             _bird = new Bird(new TouchControls());
+            _camera = new Camera();
         }
 
         protected override void Initialize()
@@ -59,7 +62,7 @@ namespace Flappy
             _graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
-            _bird.Draw(_spriteBatch);
+            _bird.Draw(_spriteBatch, _camera);
             _spriteBatch.End();
 
             base.Draw(gameTime);
