@@ -1,6 +1,6 @@
 using Flappy.Logic.Characters;
 using Flappy.Logic.Controls;
-using Flappy.Sprites;
+using Flappy.Logic.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;

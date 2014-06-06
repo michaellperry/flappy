@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Flappy.Sprites
+namespace Flappy.Logic.Sprites
 {
     public class Sprite
     {
