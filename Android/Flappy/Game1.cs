@@ -1,3 +1,4 @@
+using Flappy.Logic;
 using Flappy.Logic.Characters;
 using Flappy.Logic.Controls;
 using Flappy.Logic.Sprites;
@@ -15,8 +16,7 @@ namespace Flappy
         GraphicsDeviceManager _graphics;
         SpriteBatch _spriteBatch;
 
-        private Viewer _viewer;
-        private Bird _bird;
+        private World _world;
 
         public Game1()
         {
@@ -29,8 +29,7 @@ namespace Flappy
             _graphics.PreferredBackBufferHeight = 480;
             _graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
 
-            _viewer = new Viewer();
-            _bird = new Bird(new TouchControls());
+            _world = new World(new TouchControls());
         }
 
         protected override void Initialize()
@@ -42,7 +41,7 @@ namespace Flappy
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _bird.LoadContent(Content);
+            _world.LoadContent(Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -52,8 +51,7 @@ namespace Flappy
                 Exit();
             }
 
-            _viewer.Update(gameTime);
-            _bird.Update(gameTime);
+            _world.Update(GraphicsDevice, gameTime);
 
             base.Update(gameTime);
         }
@@ -63,7 +61,7 @@ namespace Flappy
             _graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
-            _bird.Draw(_spriteBatch, _viewer.Camera);
+            _world.Draw(_spriteBatch, GraphicsDevice);
             _spriteBatch.End();
 
             base.Draw(gameTime);

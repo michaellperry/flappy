@@ -48,10 +48,5 @@ namespace Flappy.Logic.Characters
         {
             _sprite.Draw(spriteBatch, camera);
         }
-
-        public void AdjustSetting(float setting1)
-        {
-            _body.InitialVelocity = new Vector2(setting1, -600.0f);
-        }
     }
 }

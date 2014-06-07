@@ -1,14 +1,8 @@
-﻿using Flappy.Logic.Characters;
+﻿using Flappy.Logic;
 using Flappy.Logic.Controls;
-using Flappy.Logic.Physics;
-using Flappy.Logic.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 
 namespace Flappy
 {
@@ -17,10 +11,7 @@ namespace Flappy
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private Viewer _viewer;
-        private Bird _bird;
-        private PipeResources _pipeResources;
-        private List<Pipe> _pipes = new List<Pipe>();
+        private World _world;
 
         private float _setting;
 
@@ -30,9 +21,7 @@ namespace Flappy
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            _viewer = new Viewer();
-            _bird = new Bird(new KeyboardControls());
-            _pipeResources = new PipeResources();
+            _world = new World(new KeyboardControls());
         }
 
         protected override void Initialize()
@@ -46,8 +35,7 @@ namespace Flappy
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _bird.LoadContent(Content);
-            _pipeResources.LoadContent(Content);
+            _world.LoadContent(Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -57,22 +45,7 @@ namespace Flappy
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            _viewer.Update(gameTime);
-            _bird.Update(gameTime);
-
-            Rectangle bounds = GraphicsDevice.PresentationParameters.Bounds;
-
-            var lastPipe = _pipes.LastOrDefault();
-            if (lastPipe == null || lastPipe.Location - _viewer.Camera.Position.X + 200 < bounds.Right)
-            {
-                _pipes.Add(new Pipe(5, bounds.Right + _viewer.Camera.Position.X + 100.0f, _pipeResources));
-            }
-
-            var firstPipe = _pipes.FirstOrDefault();
-            if (firstPipe != null && firstPipe.Location - _viewer.Camera.Position.X < -100.0f)
-            {
-                _pipes.Remove(firstPipe);
-            }
+            _world.Update(GraphicsDevice, gameTime);
 
             base.Update(gameTime);
         }
@@ -81,27 +54,11 @@ namespace Flappy
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            Rectangle bounds = GraphicsDevice.PresentationParameters.Bounds;
-
             _spriteBatch.Begin();
-            foreach (var pipe in _pipes)
-                pipe.Draw(_spriteBatch, bounds, _viewer.Camera);
-            _bird.Draw(_spriteBatch, _viewer.Camera);
+            _world.Draw(_spriteBatch, GraphicsDevice);
             _spriteBatch.End();
 
             base.Draw(gameTime);
-        }
-
-        private void AdjustSetting()
-        {
-            var mousePosition = Mouse.GetState().Position;
-            float setting = 5.0f * mousePosition.Y;
-            if (setting != _setting)
-            {
-                _setting = setting;
-                _bird.AdjustSetting(_setting);
-                Debug.WriteLine(String.Format("Initial velocity: {0}", _setting));
-            }
         }
     }
 }
