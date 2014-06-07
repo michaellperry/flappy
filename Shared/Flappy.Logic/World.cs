@@ -22,6 +22,7 @@ namespace Flappy.Logic
         private readonly State _dead;
         private readonly State _gameOver;
 
+        private readonly IControls _controls;
         private State _state;
         private Viewer _viewer;
         private Bird _bird;
@@ -29,6 +30,8 @@ namespace Flappy.Logic
 
         public World(IControls controls)
         {
+            _controls = controls;
+
             _start = new State
             {
                 Update = StartUpdate,
@@ -50,7 +53,7 @@ namespace Flappy.Logic
                 Draw = GameOverDraw
             };
 
-            _state = _alive;
+            _state = _start;
             _viewer = new Viewer();
             _bird = new Bird(controls);
             _pipeCollection = new PipeCollection();
@@ -79,12 +82,12 @@ namespace Flappy.Logic
 
         private void StartUpdate(GameTime gameTime)
         {
-            throw new System.NotImplementedException();
+            WaitForStart(gameTime);
         }
 
         private void StartDraw(SpriteBatch spriteBatch)
         {
-            throw new System.NotImplementedException();
+            DrawGameObjects(spriteBatch);
         }
 
         private void AliveUpdate(GameTime gameTime)
@@ -93,6 +96,10 @@ namespace Flappy.Logic
             _bird.AliveUpdate(gameTime);
             _pipeCollection.Update(_viewer.Camera.Window);
 
+            if (_bird.Position.Y + Bird.Radius > _viewer.Camera.Bounds.Bottom)
+            {
+                _state = _gameOver;
+            }
             if (_pipeCollection.CollidesWith(_bird.Position, Bird.Radius))
             {
                 _bird.Die(gameTime);
@@ -108,6 +115,11 @@ namespace Flappy.Logic
         private void DeadUpdate(GameTime gameTime)
         {
             _bird.DeadUpdate(gameTime);
+
+            if (_bird.Position.Y + Bird.Radius > _viewer.Camera.Bounds.Bottom)
+            {
+                _state = _gameOver;
+            }
         }
 
         private void DeadDraw(SpriteBatch spriteBatch)
@@ -117,12 +129,23 @@ namespace Flappy.Logic
 
         private void GameOverUpdate(GameTime gameTime)
         {
-            throw new System.NotImplementedException();
+            WaitForStart(gameTime);
         }
 
         private void GameOverDraw(SpriteBatch spriteBatch)
         {
-            throw new System.NotImplementedException();
+            DrawGameObjects(spriteBatch);
+        }
+
+        private void WaitForStart(GameTime gameTime)
+        {
+            if (_controls.ReadFlap())
+            {
+                _viewer.Reset(gameTime);
+                _bird.Reset(gameTime);
+                _pipeCollection.Reset();
+                _state = _alive;
+            }
         }
 
         private void DrawGameObjects(SpriteBatch spriteBatch)

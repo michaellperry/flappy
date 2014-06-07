@@ -21,6 +21,11 @@ namespace Flappy.Logic.Characters
             get { return _camera; }
         }
 
+        public void Reset(GameTime gameTime)
+        {
+            _cameraBody.InitialTime = (float)gameTime.TotalGameTime.TotalSeconds;
+        }
+
         public void Update(GameTime gameTime)
         {
             _camera.Position = _cameraBody.Position(gameTime);

@@ -22,6 +22,11 @@ namespace Flappy.Logic.Characters
             _pipeResources.LoadContent(content);
         }
 
+        public void Reset()
+        {
+            _pipes.Clear();
+        }
+
         public void Update(Rectangle window)
         {
             var lastPipe = _pipes.LastOrDefault();

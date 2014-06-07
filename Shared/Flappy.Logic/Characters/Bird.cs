@@ -18,20 +18,28 @@ namespace Flappy.Logic.Characters
 
         public Bird(IControls controls)
         {
+            _controls = controls;
+
             _body = new Body()
             {
-                InitialTime = 0.0f,
                 InitialPosition = new Vector2(200.0f, 200.0f),
-                InitialVelocity = new Vector2(300.0f, 0.0f),
-                Acceleration = new Vector2(0.0f, 810.0f)
+                InitialVelocity = new Vector2(300.0f, 0.0f)
             };
-            _controls = controls;
         }
 
         public void LoadContent(ContentManager contentManager)
         {
             _sprite = new Sprite(contentManager, "Bird");
             _sprite.Origin = new Vector2(31.0f, 24.0f);
+            _sprite.Position = _body.InitialPosition;
+        }
+
+        public void Reset(GameTime gameTime)
+        {
+            _body.InitialTime = (float)gameTime.TotalGameTime.TotalSeconds;
+            _body.InitialPosition = new Vector2(200.0f, 200.0f);
+            _body.InitialVelocity = new Vector2(300.0f, 0.0f);
+            _body.Acceleration = new Vector2(0.0f, 810.0f);
         }
 
         public void AliveUpdate(GameTime gameTime)
