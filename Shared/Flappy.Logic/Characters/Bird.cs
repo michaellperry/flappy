@@ -10,6 +10,8 @@ namespace Flappy.Logic.Characters
 {
     public class Bird
     {
+        public const float Radius = 24.0f;
+
         private Body _body;
         private Sprite _sprite;
         private IControls _controls;

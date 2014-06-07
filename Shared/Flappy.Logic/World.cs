@@ -93,7 +93,7 @@ namespace Flappy.Logic
             _bird.AliveUpdate(gameTime);
             _pipeCollection.Update(_viewer.Camera.Window);
 
-            if (_pipeCollection.CollidesWith(_bird.Position))
+            if (_pipeCollection.CollidesWith(_bird.Position, Bird.Radius))
             {
                 _bird.Die(gameTime);
                 _state = _dead;
