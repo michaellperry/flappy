@@ -37,7 +37,42 @@ namespace Flappy.Logic.Characters
 
         public bool CollidesWith(Vector2 position)
         {
-            return position.X > _location;
+            float birdRadius = 24.0f;
+            float pipeRadius = SegmentWidth / 2.0f;
+            float distance = Math.Abs(position.X - _location);
+            if (distance > birdRadius + pipeRadius)
+                return false;
+
+            int gapEnd = _gapStart + GapSize;
+            float gapTop = (_gapStart + 1) * SegmentHeight;
+            float gapBottom = gapEnd * SegmentHeight;
+
+            if (gapTop < position.Y - birdRadius && position.Y + birdRadius < gapBottom)
+                return false;
+
+            float edgeDepth = distance - pipeRadius;
+            if (edgeDepth <= 0.0f)
+                return true;
+
+            float bottomDepth = gapBottom - position.Y;
+            if (bottomDepth < 0.0f)
+                return true;
+
+            float topDepth = position.Y - gapTop;
+            if (topDepth <= 0.0f)
+                return true;
+
+            float birdRadiusSquared = birdRadius * birdRadius;
+            float edgeDepthSquared = edgeDepth * edgeDepth;
+            float bottomDepthSquared = bottomDepth * bottomDepth;
+            if (edgeDepthSquared + bottomDepthSquared <= birdRadiusSquared)
+                return true;
+
+            float topDepthSquared = topDepth * topDepth;
+            if (edgeDepthSquared + topDepthSquared <= birdRadiusSquared)
+                return true;
+
+            return false;
         }
 
         public void Draw(SpriteBatch spriteBatch, Camera camera)
