@@ -26,12 +26,25 @@ namespace Flappy.Logic.Characters
 
         public void Draw(SpriteBatch spriteBatch, Rectangle bounds, Camera camera)
         {
+            int gapStart = 5;
+            int gapEnd = 12;
+
             int segmentCount = (int)Math.Ceiling(bounds.Height / 25.0f);
             for (int segmentIndex = 0; segmentIndex < segmentCount; ++segmentIndex)
             {
+                if (gapStart < segmentIndex && segmentIndex < gapEnd)
+                    continue;
+
                 Vector2 position = new Vector2(800.0f, 12.0f + segmentIndex * 25.0f);
 
-                spriteBatch.Draw(_segment,
+                Texture2D image;
+                if (segmentIndex == gapStart)
+                    image = _capBottom;
+                else if (segmentIndex == gapEnd)
+                    image = _capTop;
+                else
+                    image = _segment;
+                spriteBatch.Draw(image,
                     position: position - camera.Position,
                     origin: Origin);
             }
