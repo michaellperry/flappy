@@ -35,11 +35,11 @@ namespace Flappy.Logic.Characters
             get { return _location; }
         }
 
-        public void Draw(SpriteBatch spriteBatch, Rectangle bounds, Camera camera)
+        public void Draw(SpriteBatch spriteBatch, Camera camera)
         {
             int gapEnd = _gapStart + GapSize;
 
-            int segmentCount = GetSegmentCount(bounds);
+            int segmentCount = GetSegmentCount(camera.Bounds);
             for (int segmentIndex = 0; segmentIndex < _gapStart; ++segmentIndex)
             {
                 DrawSegment(spriteBatch, camera, segmentIndex, _resources.Segment);

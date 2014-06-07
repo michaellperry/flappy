@@ -51,7 +51,8 @@ namespace Flappy
                 Exit();
             }
 
-            _world.Update(GraphicsDevice, gameTime);
+            _world.SetBounds(GraphicsDevice.PresentationParameters.Bounds);
+            _world.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -61,7 +62,7 @@ namespace Flappy
             _graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
-            _world.Draw(_spriteBatch, GraphicsDevice);
+            _world.Draw(_spriteBatch);
             _spriteBatch.End();
 
             base.Draw(gameTime);

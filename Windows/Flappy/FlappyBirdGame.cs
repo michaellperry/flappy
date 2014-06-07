@@ -45,7 +45,8 @@ namespace Flappy
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            _world.Update(GraphicsDevice, gameTime);
+            _world.SetBounds(GraphicsDevice.PresentationParameters.Bounds);
+            _world.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -55,7 +56,7 @@ namespace Flappy
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _spriteBatch.Begin();
-            _world.Draw(_spriteBatch, GraphicsDevice);
+            _world.Draw(_spriteBatch);
             _spriteBatch.End();
 
             base.Draw(gameTime);

@@ -1,10 +1,6 @@
 ﻿using Flappy.Logic.Physics;
 using Flappy.Logic.Sprites;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Flappy.Logic.Characters
 {
