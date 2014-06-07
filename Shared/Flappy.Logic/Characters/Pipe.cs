@@ -1,11 +1,7 @@
 ﻿using Flappy.Logic.Sprites;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Flappy.Logic.Characters
 {
@@ -18,42 +14,51 @@ namespace Flappy.Logic.Characters
         private static readonly Vector2 Origin = new Vector2(SegmentHorizontalCenter, SegmentVerticalCenter);
         private const int GapSize = 7;
 
-        private Texture2D _capTop;
-        private Texture2D _capBottom;
-        private Texture2D _segment;
+        private readonly int _gapStart;
+        private readonly float _location;
+        private readonly PipeResources _resources;
 
-        public void LoadContent(ContentManager contentManager)
+        public Pipe(int gapStart, float location, PipeResources resources)
         {
-            _capTop = contentManager.Load<Texture2D>("CapTop");
-            _capBottom = contentManager.Load<Texture2D>("CapBottom");
-            _segment = contentManager.Load<Texture2D>("Segment");
+            _gapStart = gapStart;
+            _location = location;
+            _resources = resources;
+        }
+
+        public static int GetSegmentCount(Rectangle bounds)
+        {
+            return (int)Math.Ceiling(bounds.Height / SegmentHeight);
+        }
+
+        public float Location
+        {
+            get { return _location; }
         }
 
         public void Draw(SpriteBatch spriteBatch, Rectangle bounds, Camera camera)
         {
-            int gapStart = 5;
-            int gapEnd = gapStart + GapSize;
+            int gapEnd = _gapStart + GapSize;
 
-            int segmentCount = (int)Math.Ceiling(bounds.Height / SegmentHeight);
-            for (int segmentIndex = 0; segmentIndex < gapStart; ++segmentIndex)
+            int segmentCount = GetSegmentCount(bounds);
+            for (int segmentIndex = 0; segmentIndex < _gapStart; ++segmentIndex)
             {
-                DrawSegment(spriteBatch, camera, segmentIndex, _segment);
+                DrawSegment(spriteBatch, camera, segmentIndex, _resources.Segment);
             }
-            DrawSegment(spriteBatch, camera, gapStart, _capBottom);
-            DrawSegment(spriteBatch, camera, gapEnd, _capTop);
+            DrawSegment(spriteBatch, camera, _gapStart, _resources.CapBottom);
+            DrawSegment(spriteBatch, camera, gapEnd, _resources.CapTop);
             for (int segmentIndex = gapEnd + 1; segmentIndex < segmentCount; ++segmentIndex)
             {
-                DrawSegment(spriteBatch, camera, segmentIndex, _segment);
+                DrawSegment(spriteBatch, camera, segmentIndex, _resources.Segment);
             }
         }
 
-        private static void DrawSegment(
+        private void DrawSegment(
             SpriteBatch spriteBatch,
             Camera camera,
             int segmentIndex,
             Texture2D image)
         {
-            Vector2 position = new Vector2(800.0f,
+            Vector2 position = new Vector2(_location,
                 SegmentVerticalCenter + segmentIndex * SegmentHeight);
 
             spriteBatch.Draw(image,

@@ -6,7 +6,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Flappy
 {
@@ -17,7 +19,8 @@ namespace Flappy
 
         private Viewer _viewer;
         private Bird _bird;
-        private Pipe _pipe;
+        private PipeResources _pipeResources;
+        private List<Pipe> _pipes = new List<Pipe>();
 
         private float _setting;
 
@@ -29,7 +32,7 @@ namespace Flappy
 
             _viewer = new Viewer();
             _bird = new Bird(new KeyboardControls());
-            _pipe = new Pipe();
+            _pipeResources = new PipeResources();
         }
 
         protected override void Initialize()
@@ -44,7 +47,7 @@ namespace Flappy
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _bird.LoadContent(Content);
-            _pipe.LoadContent(Content);
+            _pipeResources.LoadContent(Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -57,6 +60,20 @@ namespace Flappy
             _viewer.Update(gameTime);
             _bird.Update(gameTime);
 
+            Rectangle bounds = GraphicsDevice.PresentationParameters.Bounds;
+
+            var lastPipe = _pipes.LastOrDefault();
+            if (lastPipe == null || lastPipe.Location - _viewer.Camera.Position.X + 200 < bounds.Right)
+            {
+                _pipes.Add(new Pipe(5, bounds.Right + _viewer.Camera.Position.X + 100.0f, _pipeResources));
+            }
+
+            var firstPipe = _pipes.FirstOrDefault();
+            if (firstPipe != null && firstPipe.Location - _viewer.Camera.Position.X < -100.0f)
+            {
+                _pipes.Remove(firstPipe);
+            }
+
             base.Update(gameTime);
         }
 
@@ -67,7 +84,8 @@ namespace Flappy
             Rectangle bounds = GraphicsDevice.PresentationParameters.Bounds;
 
             _spriteBatch.Begin();
-            _pipe.Draw(_spriteBatch, bounds, _viewer.Camera);
+            foreach (var pipe in _pipes)
+                pipe.Draw(_spriteBatch, bounds, _viewer.Camera);
             _bird.Draw(_spriteBatch, _viewer.Camera);
             _spriteBatch.End();
 
