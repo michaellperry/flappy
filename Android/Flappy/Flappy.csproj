@@ -86,6 +86,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Content\Bird.png" />
+    <AndroidAsset Include="Assets\Content\CapBottom.png" />
+    <AndroidAsset Include="Assets\Content\CapTop.png" />
+    <AndroidAsset Include="Assets\Content\Segment.png" />
     <Content Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>

@@ -17,6 +17,7 @@ namespace Flappy
 
         private Viewer _viewer;
         private Bird _bird;
+        private Pipe _pipe;
 
         private float _setting;
 
@@ -28,6 +29,7 @@ namespace Flappy
 
             _viewer = new Viewer();
             _bird = new Bird(new KeyboardControls());
+            _pipe = new Pipe();
         }
 
         protected override void Initialize()
@@ -42,6 +44,7 @@ namespace Flappy
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _bird.LoadContent(Content);
+            _pipe.LoadContent(Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -61,7 +64,10 @@ namespace Flappy
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            Rectangle bounds = GraphicsDevice.PresentationParameters.Bounds;
+
             _spriteBatch.Begin();
+            _pipe.Draw(_spriteBatch, bounds, _viewer.Camera);
             _bird.Draw(_spriteBatch, _viewer.Camera);
             _spriteBatch.End();
 

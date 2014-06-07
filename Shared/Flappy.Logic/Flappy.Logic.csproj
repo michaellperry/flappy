@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Characters\Bird.cs" />
+    <Compile Include="Characters\Pipe.cs" />
     <Compile Include="Characters\Viewer.cs" />
     <Compile Include="Controls\IControls.cs" />
     <Compile Include="Controls\KeyboardControls.cs" />
