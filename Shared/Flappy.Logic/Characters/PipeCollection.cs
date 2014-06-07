@@ -25,13 +25,13 @@ namespace Flappy.Logic.Characters
         public void Update(Rectangle window)
         {
             var lastPipe = _pipes.LastOrDefault();
-            if (lastPipe == null || lastPipe.Location + 200 < window.Right)
+            if (lastPipe == null || lastPipe.Location < window.Right - 200)
             {
-                _pipes.Add(new Pipe(5, window.Right + 100.0f, _pipeResources));
+                _pipes.Add(new Pipe(5, window.Right + 100, _pipeResources));
             }
 
             var firstPipe = _pipes.FirstOrDefault();
-            if (firstPipe != null && firstPipe.Location < -100.0f + window.Left)
+            if (firstPipe != null && firstPipe.Location < window.Left - 100)
             {
                 _pipes.Remove(firstPipe);
             }
