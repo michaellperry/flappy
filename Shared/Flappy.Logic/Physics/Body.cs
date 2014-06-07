@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 
 namespace Flappy.Logic.Physics
 {
@@ -8,6 +9,8 @@ namespace Flappy.Logic.Physics
         public Vector2 InitialPosition { get; set; }
         public Vector2 InitialVelocity { get; set; }
         public Vector2 Acceleration { get; set; }
+        public float InitialAngle { get; set; }
+        public float AngularVelocity { get; set; }
 
         public Vector2 Position(GameTime time)
         {
@@ -24,6 +27,14 @@ namespace Flappy.Logic.Physics
             return
                 InitialVelocity +
                 t * Acceleration;
+        }
+
+        public float Angle(GameTime time)
+        {
+            float t = (float)time.TotalGameTime.TotalSeconds - InitialTime;
+            return
+                InitialAngle +
+                t * AngularVelocity;
         }
 
         public void ChangeVelocity(GameTime gameTime, Vector2 newVelocity)

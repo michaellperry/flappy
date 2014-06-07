@@ -47,10 +47,15 @@ namespace Flappy.Logic.Characters
         public void DeadUpdate(GameTime gameTime)
         {
             _sprite.Position = _body.Position(gameTime);
+            _sprite.Rotation = _body.Angle(gameTime);
         }
 
         public void Die(GameTime gameTime)
         {
+            var velocity = _body.Velocity(gameTime);
+            float angle = (float)Math.Atan2(velocity.Y, velocity.X);
+            _body.InitialAngle = angle;
+            _body.AngularVelocity = angle;
             _body.ChangeVelocity(gameTime, Vector2.Zero);
         }
 

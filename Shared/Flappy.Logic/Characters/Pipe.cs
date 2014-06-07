@@ -9,6 +9,7 @@ namespace Flappy.Logic.Characters
     {
         private const float SegmentWidth = 55.0f;
         private const float SegmentHeight = 25.0f;
+        private const float PipeRadius = SegmentWidth / 2.0f;
         private const float SegmentHorizontalCenter = SegmentWidth / 2.0f;
         private const float SegmentVerticalCenter = SegmentHeight / 2.0f;
         private static readonly Vector2 Origin = new Vector2(SegmentHorizontalCenter, SegmentVerticalCenter);
@@ -38,9 +39,8 @@ namespace Flappy.Logic.Characters
         public bool CollidesWith(Vector2 position)
         {
             float birdRadius = 24.0f;
-            float pipeRadius = SegmentWidth / 2.0f;
             float distance = Math.Abs(position.X - _location);
-            if (distance > birdRadius + pipeRadius)
+            if (distance > birdRadius + PipeRadius)
                 return false;
 
             int gapEnd = _gapStart + GapSize;
@@ -50,7 +50,7 @@ namespace Flappy.Logic.Characters
             if (gapTop < position.Y - birdRadius && position.Y + birdRadius < gapBottom)
                 return false;
 
-            float edgeDepth = distance - pipeRadius;
+            float edgeDepth = distance - PipeRadius;
             if (edgeDepth <= 0.0f)
                 return true;
 
