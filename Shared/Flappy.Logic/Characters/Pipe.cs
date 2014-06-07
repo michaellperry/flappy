@@ -35,6 +35,11 @@ namespace Flappy.Logic.Characters
             get { return _location; }
         }
 
+        public bool CollidesWith(Vector2 position)
+        {
+            return position.X > _location;
+        }
+
         public void Draw(SpriteBatch spriteBatch, Camera camera)
         {
             int gapEnd = _gapStart + GapSize;

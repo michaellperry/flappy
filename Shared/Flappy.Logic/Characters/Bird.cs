@@ -32,7 +32,7 @@ namespace Flappy.Logic.Characters
             _sprite.Origin = new Vector2(31.0f, 24.0f);
         }
 
-        public void Update(GameTime gameTime)
+        public void AliveUpdate(GameTime gameTime)
         {
             if (_controls.ReadFlap())
             {
@@ -42,6 +42,21 @@ namespace Flappy.Logic.Characters
             _sprite.Position = _body.Position(gameTime);
             var velocity = _body.Velocity(gameTime);
             _sprite.Rotation = (float)Math.Atan2(velocity.Y, velocity.X);
+        }
+
+        public void DeadUpdate(GameTime gameTime)
+        {
+            _sprite.Position = _body.Position(gameTime);
+        }
+
+        public void Die(GameTime gameTime)
+        {
+            _body.ChangeVelocity(gameTime, Vector2.Zero);
+        }
+
+        public Vector2 Position
+        {
+            get { return _sprite.Position; }
         }
 
         public void Draw(SpriteBatch spriteBatch, Camera camera)

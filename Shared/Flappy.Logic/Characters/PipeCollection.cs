@@ -37,6 +37,11 @@ namespace Flappy.Logic.Characters
             }
         }
 
+        public bool CollidesWith(Vector2 position)
+        {
+            return _pipes.Any(p => p.CollidesWith(position));
+        }
+
         public void Draw(SpriteBatch spriteBatch, Camera camera)
         {
             foreach (var pipe in _pipes)

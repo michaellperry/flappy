@@ -90,24 +90,29 @@ namespace Flappy.Logic
         private void AliveUpdate(GameTime gameTime)
         {
             _viewer.Update(gameTime);
-            _bird.Update(gameTime);
+            _bird.AliveUpdate(gameTime);
             _pipeCollection.Update(_viewer.Camera.Window);
+
+            if (_pipeCollection.CollidesWith(_bird.Position))
+            {
+                _bird.Die(gameTime);
+                _state = _dead;
+            }
         }
 
         private void AliveDraw(SpriteBatch spriteBatch)
         {
-            _pipeCollection.Draw(spriteBatch, _viewer.Camera);
-            _bird.Draw(spriteBatch, _viewer.Camera);
+            DrawGameObjects(spriteBatch);
         }
 
         private void DeadUpdate(GameTime gameTime)
         {
-            throw new System.NotImplementedException();
+            _bird.DeadUpdate(gameTime);
         }
 
         private void DeadDraw(SpriteBatch spriteBatch)
         {
-            throw new System.NotImplementedException();
+            DrawGameObjects(spriteBatch);
         }
 
         private void GameOverUpdate(GameTime gameTime)
@@ -118,6 +123,12 @@ namespace Flappy.Logic
         private void GameOverDraw(SpriteBatch spriteBatch)
         {
             throw new System.NotImplementedException();
+        }
+
+        private void DrawGameObjects(SpriteBatch spriteBatch)
+        {
+            _pipeCollection.Draw(spriteBatch, _viewer.Camera);
+            _bird.Draw(spriteBatch, _viewer.Camera);
         }
     }
 }
