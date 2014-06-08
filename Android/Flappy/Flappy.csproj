@@ -89,6 +89,9 @@
     <AndroidAsset Include="Assets\Content\CapBottom.png" />
     <AndroidAsset Include="Assets\Content\CapTop.png" />
     <AndroidAsset Include="Assets\Content\Segment.png" />
+    <AndroidAsset Include="Assets\Content\GameOver.png" />
+    <AndroidAsset Include="Assets\Content\GetReady.png" />
+    <AndroidAsset Include="Assets\Content\Instructions.png" />
     <Content Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>

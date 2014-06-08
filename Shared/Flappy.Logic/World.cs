@@ -1,5 +1,6 @@
 ﻿using Flappy.Logic.Characters;
 using Flappy.Logic.Controls;
+using Flappy.Logic.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -27,6 +28,9 @@ namespace Flappy.Logic
         private Viewer _viewer;
         private Bird _bird;
         private PipeCollection _pipeCollection;
+        private Sprite _getReadySprite;
+        private Sprite _instructionsSprite;
+        private Sprite _gameOverSprite;
 
         public World(IControls controls)
         {
@@ -63,11 +67,34 @@ namespace Flappy.Logic
         {
             _bird.LoadContent(content);
             _pipeCollection.LoadContent(content);
+
+            _getReadySprite = new Sprite(content, "GetReady")
+            {
+                Origin = new Vector2(102.0f, 26.0f)
+            };
+            _instructionsSprite = new Sprite(content, "Instructions")
+            {
+                Origin = new Vector2(88.0f, 70.0f)
+            };
+            _gameOverSprite = new Sprite(content, "GameOver")
+            {
+                Origin = new Vector2(110.0f, 23.0f)
+            };
         }
 
         public void SetBounds(Rectangle bounds)
         {
             _viewer.Camera.Bounds = bounds;
+
+            _getReadySprite.Position = new Vector2(
+                bounds.Left * 0.5f + bounds.Right * 0.5f,
+                bounds.Top * 0.7f + bounds.Bottom * 0.3f);
+            _instructionsSprite.Position = new Vector2(
+                bounds.Left * 0.5f + bounds.Right * 0.5f,
+                bounds.Top * 0.5f + bounds.Bottom * 0.5f);
+            _gameOverSprite.Position = new Vector2(
+                bounds.Left * 0.5f + bounds.Right * 0.5f,
+                bounds.Top * 0.5f + bounds.Bottom * 0.5f);
         }
 
         public void Update(GameTime gameTime)
@@ -82,12 +109,14 @@ namespace Flappy.Logic
 
         private void StartUpdate(GameTime gameTime)
         {
-            WaitForStart(gameTime);
+            HandleStart(gameTime);
         }
 
         private void StartDraw(SpriteBatch spriteBatch)
         {
             DrawGameObjects(spriteBatch);
+            _getReadySprite.Draw(spriteBatch);
+            _instructionsSprite.Draw(spriteBatch);
         }
 
         private void AliveUpdate(GameTime gameTime)
@@ -96,15 +125,8 @@ namespace Flappy.Logic
             _bird.AliveUpdate(gameTime);
             _pipeCollection.Update(_viewer.Camera.Window);
 
-            if (_bird.Position.Y + Bird.Radius > _viewer.Camera.Bounds.Bottom)
-            {
-                _state = _gameOver;
-            }
-            if (_pipeCollection.CollidesWith(_bird.Position, Bird.Radius))
-            {
-                _bird.Die(gameTime);
-                _state = _dead;
-            }
+            HandleHitGround();
+            HandleHitPipes(gameTime);
         }
 
         private void AliveDraw(SpriteBatch spriteBatch)
@@ -116,28 +138,27 @@ namespace Flappy.Logic
         {
             _bird.DeadUpdate(gameTime);
 
-            if (_bird.Position.Y + Bird.Radius > _viewer.Camera.Bounds.Bottom)
-            {
-                _state = _gameOver;
-            }
+            HandleHitGround();
         }
 
         private void DeadDraw(SpriteBatch spriteBatch)
         {
             DrawGameObjects(spriteBatch);
+            _gameOverSprite.Draw(spriteBatch);
         }
 
         private void GameOverUpdate(GameTime gameTime)
         {
-            WaitForStart(gameTime);
+            HandleStart(gameTime);
         }
 
         private void GameOverDraw(SpriteBatch spriteBatch)
         {
             DrawGameObjects(spriteBatch);
+            _gameOverSprite.Draw(spriteBatch);
         }
 
-        private void WaitForStart(GameTime gameTime)
+        private void HandleStart(GameTime gameTime)
         {
             if (_controls.ReadFlap())
             {
@@ -145,6 +166,23 @@ namespace Flappy.Logic
                 _bird.Reset(gameTime);
                 _pipeCollection.Reset();
                 _state = _alive;
+            }
+        }
+
+        private void HandleHitGround()
+        {
+            if (_bird.Position.Y + Bird.Radius > _viewer.Camera.Bounds.Bottom)
+            {
+                _state = _gameOver;
+            }
+        }
+
+        private void HandleHitPipes(GameTime gameTime)
+        {
+            if (_pipeCollection.CollidesWith(_bird.Position, Bird.Radius))
+            {
+                _bird.Die(gameTime);
+                _state = _dead;
             }
         }
 
