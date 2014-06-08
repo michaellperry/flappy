@@ -7,13 +7,14 @@ namespace Flappy.Logic.Characters
 {
     public class Pipe
     {
+        public const int GapSize = 7;
+
         private const float SegmentWidth = 55.0f;
         private const float SegmentHeight = 25.0f;
         private const float PipeRadius = SegmentWidth / 2.0f;
         private const float SegmentHorizontalCenter = SegmentWidth / 2.0f;
         private const float SegmentVerticalCenter = SegmentHeight / 2.0f;
         private static readonly Vector2 Origin = new Vector2(SegmentHorizontalCenter, SegmentVerticalCenter);
-        private const int GapSize = 7;
 
         private readonly int _gapStart;
         private readonly float _location;
