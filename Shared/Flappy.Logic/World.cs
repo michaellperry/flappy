@@ -31,6 +31,7 @@ namespace Flappy.Logic
         private Sprite _getReadySprite;
         private Sprite _instructionsSprite;
         private Sprite _gameOverSprite;
+        private Strip _cloudStrip;
 
         public World(IControls controls)
         {
@@ -80,6 +81,8 @@ namespace Flappy.Logic
             {
                 Origin = new Vector2(110.0f, 23.0f)
             };
+
+            _cloudStrip = new Strip(content, "Clouds");
         }
 
         public void SetBounds(Rectangle bounds)
@@ -188,6 +191,7 @@ namespace Flappy.Logic
 
         private void DrawGameObjects(SpriteBatch spriteBatch)
         {
+            _cloudStrip.Draw(spriteBatch, _viewer.Camera);
             _pipeCollection.Draw(spriteBatch, _viewer.Camera);
             _bird.Draw(spriteBatch, _viewer.Camera);
         }

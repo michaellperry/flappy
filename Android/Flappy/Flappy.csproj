@@ -92,6 +92,9 @@
     <AndroidAsset Include="Assets\Content\GameOver.png" />
     <AndroidAsset Include="Assets\Content\GetReady.png" />
     <AndroidAsset Include="Assets\Content\Instructions.png" />
+    <AndroidAsset Include="Assets\Content\City.png" />
+    <AndroidAsset Include="Assets\Content\Clouds.png" />
+    <AndroidAsset Include="Assets\Content\Trees.png" />
     <Content Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
