@@ -82,7 +82,7 @@ namespace Flappy.Logic
                 Origin = new Vector2(110.0f, 23.0f)
             };
 
-            _cloudStrip = new Strip(content, "Clouds");
+            _cloudStrip = new Strip(content, "Clouds", 0.2f);
         }
 
         public void SetBounds(Rectangle bounds)
