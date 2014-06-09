@@ -32,6 +32,8 @@ namespace Flappy.Logic
         private Sprite _instructionsSprite;
         private Sprite _gameOverSprite;
         private Strip _cloudStrip;
+        private Strip _cityStrip;
+        private Strip _treesStrip;
 
         public World(IControls controls)
         {
@@ -83,6 +85,8 @@ namespace Flappy.Logic
             };
 
             _cloudStrip = new Strip(content, "Clouds", 0.2f);
+            _cityStrip = new Strip(content, "City", 0.3f);
+            _treesStrip = new Strip(content, "Trees", 0.4f);
         }
 
         public void SetBounds(Rectangle bounds)
@@ -192,6 +196,8 @@ namespace Flappy.Logic
         private void DrawGameObjects(SpriteBatch spriteBatch)
         {
             _cloudStrip.Draw(spriteBatch, _viewer.Camera);
+            _cityStrip.Draw(spriteBatch, _viewer.Camera);
+            _treesStrip.Draw(spriteBatch, _viewer.Camera);
             _pipeCollection.Draw(spriteBatch, _viewer.Camera);
             _bird.Draw(spriteBatch, _viewer.Camera);
         }
