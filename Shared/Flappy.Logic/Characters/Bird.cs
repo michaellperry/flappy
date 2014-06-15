@@ -29,7 +29,7 @@ namespace Flappy.Logic.Characters
 
         public void LoadContent(ContentManager contentManager)
         {
-            _sprite = new Sprite(contentManager, "Bird");
+            _sprite = new Sprite(contentManager, "Bird0", "Bird1", "Bird2");
             _sprite.Origin = new Vector2(31.0f, 24.0f);
             _sprite.Position = _body.InitialPosition;
         }
@@ -52,6 +52,8 @@ namespace Flappy.Logic.Characters
             _sprite.Position = _body.Position(gameTime);
             var velocity = _body.Velocity(gameTime);
             _sprite.Rotation = (float)Math.Atan2(velocity.Y, velocity.X);
+            int frame = gameTime.TotalGameTime.Milliseconds / 250;
+            _sprite.ImageIndex = frame > 2 ? 1 : frame;
         }
 
         public void DeadUpdate(GameTime gameTime)

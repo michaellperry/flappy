@@ -10,11 +10,13 @@ namespace Flappy.Logic.Sprites
 {
     public class Sprite
     {
-        private Texture2D _texture;
+        private Texture2D[] _texture;
 
-        public Sprite(ContentManager content, string name)
+        public Sprite(ContentManager content, params string[] names)
         {
-            _texture = content.Load<Texture2D>(name);
+            _texture = names
+                .Select(name => content.Load<Texture2D>(name))
+                .ToArray();
             Position = Vector2.Zero;
             Origin = Vector2.Zero;
         }
@@ -22,10 +24,11 @@ namespace Flappy.Logic.Sprites
         public Vector2 Position { get; set; }
         public Vector2 Origin { get; set; }
         public float Rotation { get; set; }
+        public int ImageIndex { get; set; }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture,
+            spriteBatch.Draw(_texture[ImageIndex],
                 position: Position,
                 rotation: Rotation,
                 origin: Origin);
@@ -33,7 +36,7 @@ namespace Flappy.Logic.Sprites
 
         public void Draw(SpriteBatch spriteBatch, Camera camera)
         {
-            spriteBatch.Draw(_texture,
+            spriteBatch.Draw(_texture[ImageIndex],
                 position: Position - camera.Position,
                 rotation: Rotation,
                 origin: Origin);

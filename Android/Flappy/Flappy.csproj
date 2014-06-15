@@ -85,7 +85,6 @@
     <AndroidResource Include="Resources\Values\Styles.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\Content\Bird.png" />
     <AndroidAsset Include="Assets\Content\CapBottom.png" />
     <AndroidAsset Include="Assets\Content\CapTop.png" />
     <AndroidAsset Include="Assets\Content\Segment.png" />
@@ -95,6 +94,9 @@
     <AndroidAsset Include="Assets\Content\City.png" />
     <AndroidAsset Include="Assets\Content\Clouds.png" />
     <AndroidAsset Include="Assets\Content\Trees.png" />
+    <AndroidAsset Include="Assets\Content\Bird0.png" />
+    <AndroidAsset Include="Assets\Content\Bird1.png" />
+    <AndroidAsset Include="Assets\Content\Bird2.png" />
     <Content Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
